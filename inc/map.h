@@ -5,4 +5,6 @@ typedef struct sMap * Map;
 
 Map initMap(int ligne, int colonne);
 
+Map chargerMap(void);
+
 #endif

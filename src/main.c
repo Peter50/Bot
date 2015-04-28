@@ -3,6 +3,8 @@
 #include <string.h>
 #include <math.h>
 
+#include "map.h"
+
 /* Fonction permettant de calculer la consomation de carburant 
  * accX et accY accélération actuelle
  * velX et velY vitesse actuelle 
@@ -24,44 +26,22 @@ int deltaCarburantAcceleration(int accX, int accY, int velX, int velY, int dansS
 /* Pilote de base avec lecture carburant */
 int main(int argn, char** argv){
 	char c;
-	int i;
-	FILE* info = fopen("GPdroitAuBut.log","w"); // Pour le débuggage
-	fprintf(info," === >Carte< === \n");
-	//Lecture de la carte droit au but.
-	int tx, ty;
-	int carburant; // carburant dans le réservoir
-	int nbrBoosts = 5; // Nombre de boosts au départ
-	// Il y a maintenant lecture du carburant au départ
-	fscanf(stdin,"%d %d %d", &tx, &ty,&carburant);
-	fprintf(info,"taille %d x %d\n", tx, ty);
-	fprintf(info,"Carburant de départ %d \n\n",carburant);
-	while(fread(&c, sizeof(char), 1, stdin)==1 && c!='\n');
-	for (i=0; i<ty; i++) { // Lecture de la carte ligne par ligne
-		while(fread(&c, sizeof(char), 1, stdin)==1 && c!='\n') fprintf(info,"%c",c);
-		fprintf(info,"\n");
-	}	
-	fflush(info);
-	fprintf(info,"\n === Debut Course === \n");
+	Map map=chargerMap();
 	int tour = 0;
 	int accX = 0, accY = -1;
 	int velX = 0, velY = 0;
 	char action[100];
 	while(!feof(stdin)){
 		tour++;
-		fprintf(info,"\n === Tour %d === \n", tour);
 		//Lecture des positions.
-		while(fread(&c, sizeof(char), 1, stdin)==1 && c!='\n') fprintf(info,"%c",c);
-		fprintf(info,"\n === Action === \n");
+		while(fread(&c, sizeof(char), 1, stdin)==1 && c!='\n');
 		// Pas de prise en compte du sable (pas de mémorisation de la carte)
-		carburant += deltaCarburantAcceleration(accX, accY, velX, velY, 0);
 		velX += accX;
 		velY += accY;
 		//Écriture de l'accélération.
 		sprintf(action,"%d %d",accX,accY);
 		fprintf(stdout, "%s\n", action);
-		fprintf(info, "%s (carburant restant %d)\n", action, carburant);
 		fflush(stdout); // Vidage du buffer nécessaire.
-		fflush(info);
 	}
 
 
