@@ -3,9 +3,7 @@
 
 #include "map.h"
 
-
 struct sMap{
-
 	char ** matrice;
 	int ligne;
 	int colonne;
@@ -21,7 +19,8 @@ Map initMap(int ligne, int colonne){
 	map->colonne=colonne;
 	map->matrice=malloc(sizeof(char *)*ligne);
 	map->boost=5;
-
+	map->carburant=0;
+	
 	for(i=0;i<ligne;i++){
 		map->matrice[i]=calloc(colonne,sizeof(char));
 	}
