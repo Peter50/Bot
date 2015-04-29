@@ -17,6 +17,7 @@ int main(int argn, char** argv){
 	
 	char c;
 	Map map=chargerMap();
+	sauverMap(map,"bot.log");
 	int tour = 0;
 	int accX = 0, accY = -1;
 	int velX = 0, velY = 0;
@@ -27,6 +28,10 @@ int main(int argn, char** argv){
 		while(fread(&c, sizeof(char), 1, stdin)==1 && c!='\n');
 		velX += accX;
 		velY += accY;
+		accY=-1;
+		if(velY<-5){
+			accY=0;
+		}
 		sprintf(action,"%d %d",accX,accY);
 		fprintf(stdout, "%s\n", action);
 		fflush(stdout);

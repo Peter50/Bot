@@ -11,11 +11,20 @@ struct sVoiture{
 	int carburant; // Potentiellement facultatif
 }
 
-Voiture initVoiture(){
+Voiture initVoiture(void){
 	Voiture voiture=malloc(sizeof(struct sVoiture));
 	voiture->position=initPosition();
 	voiture->vitesse=initVitesse();
 	voiture->predecesseur=NULL;
 	voiture->carburant=0;
 	return voiture;
+}
+
+void detruireVoiture(Voiture voiture){
+	free(voiture);
+}
+
+void ajouterVoitureAcceleration(Voiture voiture,Acceleration acceleration){
+	voiture->vitesse=ajouterVitesseAcceleration(voiture->vitesse	,acceleration);
+	voiture->position=ajouterPositionVitesse(voiture->vitesse,voiture->position);
 }

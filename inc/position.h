@@ -3,4 +3,8 @@
 
 typedef struct sPosition * Position;
 
+Position initPosition(int x, int y);
+
+void detruirePosition(Position position);
+
 #endif
