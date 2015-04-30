@@ -10,13 +10,13 @@ struct sVoiture{
 	Position position;
 	Vitesse vitesse;
 	Voiture predecesseur;
-	int carburant; // Potentiellement facultatif
-}
+	int carburant;
+};
 
-Voiture initVoiture(Voiture voiture){
+Voiture initVoiture(void){
 	Voiture voiture=malloc(sizeof(struct sVoiture));
-	voiture->position=initPosition();
-	voiture->vitesse=initVitesse();
+	voiture->position=initPosition(0,0);
+	voiture->vitesse=initVitesse(0,0);
 	voiture->predecesseur=NULL;
 	voiture->carburant=0;
 	return voiture;
@@ -37,6 +37,6 @@ Voiture ajouterVoitureAcceleration(Voiture voiture,Acceleration acceleration){
 	return voiture2;
 }
 
-void setPosition(Voiture voiture, Position position){
+void setPositionVoiture(Voiture voiture, Position position){
 	voiture->position=position;
 }

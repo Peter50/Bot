@@ -17,7 +17,7 @@ Position initPosition(int x, int y){
 }
 
 void detruirePosition(Position position){
-	free(position);	
+	free(position);
 }
 
 int getPositionX(Position position){
@@ -30,5 +30,5 @@ int getPositionY(Position position){
 
 Position ajouterPositionVitesse(Position position, Vitesse vitesse){
 	Position position2=initPosition(getPositionX(position)+getVitesseX(vitesse),getPositionY(position)+getVitesseY(vitesse));
-	return vitesse2;
+	return position2;
 }

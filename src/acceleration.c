@@ -9,7 +9,7 @@ struct sAcceleration{
 };
 
 Acceleration initAcceleration(int x, int y){
-	Acceleration acceleration=malloc(sizeof(struct sAcceleration);
+	Acceleration acceleration=malloc(sizeof(struct sAcceleration));
 	acceleration->x=x;
 	acceleration->y=y;
 	return acceleration;

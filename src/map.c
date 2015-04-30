@@ -10,7 +10,7 @@
 struct sMap{
 	Case ** matrice;
 	Acceleration * normal;
-	Acceleration * boost;
+	Acceleration * booste;
 	int ligne;
 	int colonne;
 	int carburant;
@@ -26,7 +26,7 @@ Map initMap(int ligne, int colonne){
 	map->matrice=malloc(sizeof(Case *)*ligne);
 	map->boost=5;
 	map->carburant=0;
-	
+
 	for(i=0;i<ligne;i++){
 		map->matrice[i]=calloc(colonne,sizeof(Case));
 	}
@@ -81,10 +81,42 @@ Map chargerMap(void){
 	return map;
 }
 
+Map chargerFichierMap(char * fichier){
+
+    char c=0;
+    int ligne,colonne,carburant,i,j;
+    FILE * file=fopen(fichier,"r");
+	fscanf(file,"%d %d %d\n",&colonne,&ligne,&carburant);
+	Map map=initMap(ligne,colonne);
+
+	for(i=0;i<ligne;i++){
+		j=0;
+		while(c!='\n'){
+            fscanf(file,"%d",&c);
+			switch(c){
+				case '.':
+				map->matrice[i][j]=VIDE;
+				break;
+				case '#':
+				map->matrice[i][j]=ROUTE;
+				break;
+				case '=':
+				map->matrice[i][j]=ARRIVE;
+				break;
+				case '~':
+				map->matrice[i][j]=SABLE;
+				break;
+			}
+			j++;
+		}
+	}
+	return map;
+}
+
 void sauverMap(Map map,char * fichier){
 	int i,j;
 	FILE * file=fopen(fichier,"w");
-	fprintf(file,"Map %d %d :\n",map->ligne,map->colonne);
+	fprintf(file,"%d %d %d\n",map->ligne,map->colonne,map->carburant);
 	if(map){
 		for(i=0;i<map->ligne;i++){
 			for(j=0;j<map->colonne;j++){
@@ -94,10 +126,10 @@ void sauverMap(Map map,char * fichier){
 					break;
 					case ROUTE:
 					fprintf(file,"#");
-					break;				
+					break;
 					case SABLE:
 					fprintf(file,"~");
-					break;					
+					break;
 					case ARRIVE:
 					fprintf(file,"=");
 					break;
@@ -109,7 +141,7 @@ void sauverMap(Map map,char * fichier){
 	fclose(file);
 }
 
-Case getCase(Position position){	
+Case getCase(Map map,Position position){
 	Case emplacement=VIDE;
 	if(position == NULL){
 		return VIDE;
@@ -133,7 +165,7 @@ int estValide(Map map,Position position){
 Voiture simulation(Voiture voiture,Map map,Acceleration acceleration){
 	Voiture voiture2=ajouterVoitureAcceleration(voiture);
 	Position position2=deplacementVoiture(voiture2);
-	if(estValide(position2)){
+	if(estValide(map,position2)){
 			setPositionVoiture(voiture,position2);
 	}
 	else{
