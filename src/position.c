@@ -20,6 +20,15 @@ void detruirePosition(Position position){
 	free(position);	
 }
 
+int getPositionX(Position position){
+	return position->x;
+}
+
+int getPositionY(Position position){
+	return position->y;
+}
+
 Position ajouterPositionVitesse(Position position, Vitesse vitesse){
-	return NULL;
+	Position position2=initPosition(getPositionX(position)+getVitesseX(vitesse),getPositionY(position)+getVitesseY(vitesse));
+	return vitesse2;
 }

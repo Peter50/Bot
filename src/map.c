@@ -2,12 +2,15 @@
 #include <stdlib.h>
 
 #include "acceleration.h"
+#include "position.h"
 #include "vitesse.h"
 #include "voiture.h"
 #include "map.h"
 
 struct sMap{
 	Case ** matrice;
+	Acceleration * normal;
+	Acceleration * boost;
 	int ligne;
 	int colonne;
 	int carburant;
@@ -15,7 +18,7 @@ struct sMap{
 };
 
 Map initMap(int ligne, int colonne){
-	int i=0;
+	int i=0,j=0,k=0;
 
 	Map map=malloc(sizeof(struct sMap));
 	map->ligne=ligne;
@@ -26,6 +29,22 @@ Map initMap(int ligne, int colonne){
 	
 	for(i=0;i<ligne;i++){
 		map->matrice[i]=calloc(colonne,sizeof(Case));
+	}
+
+	map->normal=malloc(sizeof(Acceleration)*9);
+	for(i=-1;i<2;i++){
+		for(j=-1;j<2;j++){
+			map->normal[k]=initAcceleration(i,j);
+			k++;
+		}
+	}
+
+	map->normal=malloc(sizeof(Acceleration)*25);
+	for(i=-2;i<3;i++){
+		for(j=-2;j<3;j++){
+			map->normal[k]=initAcceleration(i,j);
+			k++;
+		}
 	}
 
 	return map;
@@ -90,6 +109,36 @@ void sauverMap(Map map,char * fichier){
 	fclose(file);
 }
 
-Voiture simulation(Voiture voiture,Map map,Acceleration acceleration){
-	return NULL;
+Case getCase(Position position){	
+	Case emplacement=VIDE;
+	if(position == NULL){
+		return VIDE;
+	}
+	if(getPositionX(position) >= map->ligne || getPositionX(position) < 0 || getPositionY(position) >= map->colonne || getPositionY(position) < 0){
+		return VIDE;
+	}
+
+	return map->matrice[getPositionX(position)][getPositionY(position)];
 }
+
+int estValide(Map map,Position position){
+	if(getCase(map,position)==VIDE){
+		return 0;
+	}
+	return 1;
+}
+
+
+
+Voiture simulation(Voiture voiture,Map map,Acceleration acceleration){
+	Voiture voiture2=ajouterVoitureAcceleration(voiture);
+	Position position2=deplacementVoiture(voiture2);
+	if(estValide(position2)){
+			setPositionVoiture(voiture,position2);
+	}
+	else{
+		detruirePosition(position2);
+	}
+}
+
+
