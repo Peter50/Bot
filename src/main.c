@@ -33,6 +33,7 @@ int main(int argn, char** argv){
 	char action[100];
 	
 	while(!feof(stdin)){
+
 		FILE * file=fopen("coupbot.log","w");
 		tour++;
 		fprintf(file,"%d ",tour);

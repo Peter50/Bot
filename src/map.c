@@ -15,6 +15,9 @@ struct sMap{
 	int nbNormal;
 	Acceleration * booste;
 	int nbBooste;
+	Position position;
+	Position position2;
+	Position position3;
 	int ligne;
 	int colonne;
 	int carburant;
@@ -28,12 +31,18 @@ Map initMap(int ligne, int colonne){
 	map->ligne=ligne;
 	map->colonne=colonne;
 	map->matrice=malloc(sizeof(Case *)*ligne);
+	map->check=malloc(sizeof(int *)*ligne);
 	map->boost=5;
 	map->carburant=0;
+	map->position=NULL;
+	map->position2=NULL;
+	map->position3=NULL;
 
 	for(i=0;i<ligne;i++){
 		map->matrice[i]=calloc(colonne,sizeof(Case));
+		map->check[i]=calloc(colonne,sizeof(int));
 	}
+
 
 	map->normal=malloc(sizeof(Acceleration)*9);
 	map->nbNormal=9;
@@ -44,11 +53,11 @@ Map initMap(int ligne, int colonne){
 		}
 	}
 
-	map->normal=malloc(sizeof(Acceleration)*25);
+	map->booste=malloc(sizeof(Acceleration)*25);
 	map->nbBooste=25;
 	for(i=-2;i<3;i++){
 		for(j=-2;j<3;j++){
-			map->normal[k]=initAcceleration(i,j);
+			map->booste[k]=initAcceleration(i,j);
 			k++;
 		}
 	}
@@ -116,12 +125,15 @@ Map chargerFichierMap(char * fichier){
 				break;
 				case '1':
 				map->matrice[i][j]=J1;
+				map->position=initPosition(i,j);
 				break;
 				case '2':
 				map->matrice[i][j]=J2;
+				map->position2=initPosition(i,j);
 				break;
 				case '3':
 				map->matrice[i][j]=J3;
+				map->position=initPosition(i,j);
 				break;
 			}
 			j++;
@@ -251,3 +263,6 @@ int arrive(Voiture voiture, Map map){
 	return 0;
 }
 
+Position getPosition(Map map){
+	return map->position;
+}

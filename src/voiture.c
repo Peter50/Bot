@@ -26,8 +26,6 @@ Voiture initVoiture(void){
 }
 
 void detruireVoiture(Voiture voiture){
-	detruirePosition(voiture->position);
-	detruireVitesse(voiture->vitesse);
 	free(voiture);
 }
 

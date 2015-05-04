@@ -34,4 +34,6 @@ int estCheck(Voiture voiture,Map map);
 
 int arrive(Voiture voiture, Map map);
 
+Position getPosition(Map map);
+
 #endif
