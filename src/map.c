@@ -92,7 +92,7 @@ Map chargerFichierMap(char * fichier){
 	for(i=0;i<ligne;i++){
 		j=0;
 		while(c!='\n'){
-            fscanf(file,"%d",&c);
+            fscanf(file,"%c",&c);
 			switch(c){
 				case '.':
 				map->matrice[i][j]=VIDE;
@@ -142,14 +142,12 @@ void sauverMap(Map map,char * fichier){
 }
 
 Case getCase(Map map,Position position){
-	Case emplacement=VIDE;
 	if(position == NULL){
 		return VIDE;
 	}
 	if(getPositionX(position) >= map->ligne || getPositionX(position) < 0 || getPositionY(position) >= map->colonne || getPositionY(position) < 0){
 		return VIDE;
 	}
-
 	return map->matrice[getPositionX(position)][getPositionY(position)];
 }
 
@@ -163,7 +161,7 @@ int estValide(Map map,Position position){
 
 
 Voiture simulation(Voiture voiture,Map map,Acceleration acceleration){
-	Voiture voiture2=ajouterVoitureAcceleration(voiture);
+	Voiture voiture2=ajouterVoitureAcceleration(voiture,acceleration);
 	Position position2=deplacementVoiture(voiture2);
 	if(estValide(map,position2)){
 			setPositionVoiture(voiture,position2);
@@ -171,6 +169,8 @@ Voiture simulation(Voiture voiture,Map map,Acceleration acceleration){
 	else{
 		detruirePosition(position2);
 	}
+
+	return voiture;
 }
 
 

@@ -33,7 +33,6 @@ Position deplacementVoiture(Voiture voiture){
 Voiture ajouterVoitureAcceleration(Voiture voiture,Acceleration acceleration){
 	Voiture voiture2=initVoiture();
 	voiture2->vitesse=ajouterVitesseAcceleration(voiture->vitesse,acceleration);
-	voiture2->position=ajouterPositionVitesse(voiture2->vitesse,voiture->position);
 	return voiture2;
 }
 

@@ -32,3 +32,4 @@ Position ajouterPositionVitesse(Position position, Vitesse vitesse){
 	Position position2=initPosition(getPositionX(position)+getVitesseX(vitesse),getPositionY(position)+getVitesseY(vitesse));
 	return position2;
 }
+

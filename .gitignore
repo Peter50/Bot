@@ -219,3 +219,8 @@ pip-log.txt
 *.cbp
 *.layout
 *.cscope_file_list
+
+#Ubuntu
+*.o
+*~
+*.swp

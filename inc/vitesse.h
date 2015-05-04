@@ -11,4 +11,8 @@ void detruireVitesse(Vitesse vitesse);
 
 Vitesse ajouterVitesseAcceleration(Vitesse vitesse, Acceleration acceleration);
 
+int getVitesseX(Vitesse vitesse);
+
+int getVitesseY(Vitesse vitesse);
+
 #endif
