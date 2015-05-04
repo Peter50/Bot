@@ -44,3 +44,7 @@ void resetVitesse(Vitesse vitesse){
 	vitesse->y=0;
 	vitesse->x=0;
 }
+
+void afficherVitesse(Vitesse vitesse){
+    printf("%d %d\n",vitesse->x,vitesse->y);
+}

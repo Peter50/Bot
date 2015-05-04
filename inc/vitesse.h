@@ -17,4 +17,6 @@ int getVitesseY(Vitesse vitesse);
 
 void resetVitesse(Vitesse vitesse);
 
+void afficherVitesse(Vitesse vitesse);
+
 #endif

@@ -15,4 +15,6 @@ int getPositionY(Position position);
 
 Position ajouterPositionVitesse(Position position, Vitesse vitesse);
 
+void afficherPosition(Position position);
+
 #endif

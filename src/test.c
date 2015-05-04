@@ -12,5 +12,6 @@ int main(int argn, char** argv){
 	Voiture voiture=initVoiture();
 	setPositionVoiture(voiture,getPosition(map));
 	Voiture voiture2=listeVoiture(map,voiture);
+	afficherVoiture(voiture2);
     return 0;
 }

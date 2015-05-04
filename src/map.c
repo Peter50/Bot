@@ -43,7 +43,6 @@ Map initMap(int ligne, int colonne){
 		map->check[i]=calloc(colonne,sizeof(int));
 	}
 
-
 	map->normal=malloc(sizeof(Acceleration)*9);
 	map->nbNormal=9;
 	for(i=-1;i<2;i++){
@@ -125,6 +124,7 @@ Map chargerFichierMap(char * fichier){
 				break;
 				case '1':
 				map->matrice[i][j]=J1;
+				map->check[i][j]=1;
 				map->position=initPosition(i,j);
 				break;
 				case '2':
@@ -172,7 +172,6 @@ void sauverMap(Map map,char * fichier){
 					case J3:
 					fprintf(file,"3");
 					break;
-
 				}
 			}
 			fprintf(file,"\n");
@@ -220,15 +219,16 @@ Voiture simulation(Voiture voiture,Map map,Acceleration acceleration){
 }
 
 Voiture listeVoiture(Map map,Voiture voiture){
-	
+
 	File file=initFile();
 	Voiture voiture2=NULL;
-	int i,end;
+	int i,end=0;
 
 	enfiler(file,(void *)voiture);
 	while(!(fileEstVide(file)) && end == 0){
 		voiture=defiler(file);
 		for(i=0;i<map->nbNormal;i++){
+            printf("%d\n",i);
 			voiture2=simulation(voiture,map,map->normal[i]);
 			if(!(estCheck(voiture2,map))){
 				enfiler(file,(void *)voiture2);
@@ -247,11 +247,13 @@ Voiture listeVoiture(Map map,Voiture voiture){
 
 int estCheck(Voiture voiture, Map map){
 	Position position=getPositionVoiture(voiture);
+	if(!(estValide(map,position))){
+        return 1;
+	}
 	if(map->check[getPositionX(position)][getPositionY(position)] == 0){
 		map->check[getPositionX(position)][getPositionY(position)]=1;
 		return 0;
 	}
-
 	return 1;
 }
 

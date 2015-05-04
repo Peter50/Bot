@@ -53,3 +53,12 @@ void resetVitesseVoiture(Voiture voiture){
 Position getPositionVoiture(Voiture voiture){
 	return voiture->position;
 }
+
+void afficherVoiture(Voiture voiture){
+    if(voiture){
+        afficherPosition(voiture->position);
+        afficherVitesse(voiture->vitesse);
+        printf("%d %d\n",voiture->carburant,voiture->rang);
+        afficherVoiture(voiture->predecesseur);
+    }
+}

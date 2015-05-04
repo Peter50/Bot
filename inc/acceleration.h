@@ -13,4 +13,6 @@ int getAccelerationY(Acceleration acceleration);
 
 void jouerCoup(Acceleration acceleration);
 
+void afficherAcceleration(Acceleration acceleration);
+
 #endif

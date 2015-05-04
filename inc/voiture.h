@@ -21,4 +21,6 @@ void resetVitesseVoiture(Voiture voiture);
 
 Position getPositionVoiture(Voiture voiture);
 
+void afficherVoiture(Voiture voiture);
+
 #endif

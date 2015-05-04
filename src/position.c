@@ -33,3 +33,6 @@ Position ajouterPositionVitesse(Position position, Vitesse vitesse){
 	return position2;
 }
 
+void afficherPosition(Position position){
+    printf("%d %d\n",position->x,position->y);
+}
