@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "file.h"
 #include "acceleration.h"
 #include "position.h"
 #include "vitesse.h"
@@ -9,8 +10,11 @@
 
 struct sMap{
 	Case ** matrice;
+	int ** check;
 	Acceleration * normal;
+	int nbNormal;
 	Acceleration * booste;
+	int nbBooste;
 	int ligne;
 	int colonne;
 	int carburant;
@@ -32,6 +36,7 @@ Map initMap(int ligne, int colonne){
 	}
 
 	map->normal=malloc(sizeof(Acceleration)*9);
+	map->nbNormal=9;
 	for(i=-1;i<2;i++){
 		for(j=-1;j<2;j++){
 			map->normal[k]=initAcceleration(i,j);
@@ -40,6 +45,7 @@ Map initMap(int ligne, int colonne){
 	}
 
 	map->normal=malloc(sizeof(Acceleration)*25);
+	map->nbBooste=25;
 	for(i=-2;i<3;i++){
 		for(j=-2;j<3;j++){
 			map->normal[k]=initAcceleration(i,j);
@@ -83,16 +89,18 @@ Map chargerMap(void){
 
 Map chargerFichierMap(char * fichier){
 
-    char c=0;
+    char c;
     int ligne,colonne,carburant,i,j;
     FILE * file=fopen(fichier,"r");
 	fscanf(file,"%d %d %d\n",&colonne,&ligne,&carburant);
 	Map map=initMap(ligne,colonne);
-
+	map->carburant=carburant;
 	for(i=0;i<ligne;i++){
 		j=0;
+		c='1';
 		while(c!='\n'){
             fscanf(file,"%c",&c);
+			printf("%c",c);
 			switch(c){
 				case '.':
 				map->matrice[i][j]=VIDE;
@@ -106,9 +114,19 @@ Map chargerFichierMap(char * fichier){
 				case '~':
 				map->matrice[i][j]=SABLE;
 				break;
+				case '1':
+				map->matrice[i][j]=J1;
+				break;
+				case '2':
+				map->matrice[i][j]=J2;
+				break;
+				case '3':
+				map->matrice[i][j]=J3;
+				break;
 			}
 			j++;
 		}
+		printf("\n");
 	}
 	return map;
 }
@@ -133,6 +151,16 @@ void sauverMap(Map map,char * fichier){
 					case ARRIVE:
 					fprintf(file,"=");
 					break;
+					case J1:
+					fprintf(file,"1");
+					break;
+					case J2:
+					fprintf(file,"2");
+					break;
+					case J3:
+					fprintf(file,"3");
+					break;
+
 				}
 			}
 			fprintf(file,"\n");
@@ -142,13 +170,18 @@ void sauverMap(Map map,char * fichier){
 }
 
 Case getCase(Map map,Position position){
+	Case emplacement;
 	if(position == NULL){
 		return VIDE;
 	}
 	if(getPositionX(position) >= map->ligne || getPositionX(position) < 0 || getPositionY(position) >= map->colonne || getPositionY(position) < 0){
 		return VIDE;
 	}
-	return map->matrice[getPositionX(position)][getPositionY(position)];
+	emplacement=map->matrice[getPositionX(position)][getPositionY(position)];
+	if(emplacement==J1 || emplacement == J2 || emplacement == J3){
+		return ROUTE;
+	}
+	return emplacement;
 }
 
 int estValide(Map map,Position position){
@@ -168,9 +201,53 @@ Voiture simulation(Voiture voiture,Map map,Acceleration acceleration){
 	}
 	else{
 		detruirePosition(position2);
+		resetVitesseVoiture(voiture2);
 	}
 
+	return voiture2;
+}
+
+Voiture listeVoiture(Map map,Voiture voiture){
+	
+	File file=initFile();
+	Voiture voiture2=NULL;
+	int i,end;
+
+	enfiler(file,(void *)voiture);
+	while(!(fileEstVide(file)) && end == 0){
+		voiture=defiler(file);
+		for(i=0;i<map->nbNormal;i++){
+			voiture2=simulation(voiture,map,map->normal[i]);
+			if(!(estCheck(voiture2,map))){
+				enfiler(file,(void *)voiture2);
+			}
+			else{
+				detruireVoiture(voiture2);
+			}
+		}
+		if(arrive(voiture,map)){
+			end=1;
+		}
+	}
+	detruireFile(file);
 	return voiture;
 }
 
+int estCheck(Voiture voiture, Map map){
+	Position position=getPositionVoiture(voiture);
+	if(map->check[getPositionX(position)][getPositionY(position)] == 0){
+		map->check[getPositionX(position)][getPositionY(position)]=1;
+		return 0;
+	}
+
+	return 1;
+}
+
+int arrive(Voiture voiture, Map map){
+	Position position=getPositionVoiture(voiture);
+	if(map->matrice[getPositionX(position)][getPositionY(position)] == ARRIVE){
+		return 1;
+	}
+	return 0;
+}
 

@@ -2,8 +2,10 @@ CC=gcc
 LDFLAGS= -g -lm
 CFLAGS=-Wextra -g -Wall -pedantic -ansi -std=c99 -I inc
 
-all: main
+all: main test
 
+
+obj/file.o: src/file.c
 obj/acceleration.o: src/acceleration.c
 obj/vitesse.o: src/acceleration.c src/vitesse.c
 obj/position.o: src/acceleration.c src/vitesse.c src/position.c
@@ -14,9 +16,9 @@ obj/test.o: src/test.c
 
 obj/%.o: src/%.c
 	$(CC) -c $< -o $@ $(CFLAGS)
-main: obj/acceleration.o obj/vitesse.o obj/position.o obj/voiture.o obj/map.o obj/main.o
+main: obj/file.o obj/acceleration.o obj/vitesse.o obj/position.o obj/voiture.o obj/map.o obj/main.o
 	$(CC) $^ -o $@ $(LDFLAGS)
-test: obj/acceleration.o obj/vitesse.o obj/position.o obj/voiture.o obj/map.o obj/test.o
+test: obj/file.o obj/acceleration.o obj/vitesse.o obj/position.o obj/voiture.o obj/map.o obj/test.o
 	$(CC) $^ -o $@ $(LDFLAGS)
 
 clean:

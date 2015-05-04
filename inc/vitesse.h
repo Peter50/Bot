@@ -15,4 +15,6 @@ int getVitesseX(Vitesse vitesse);
 
 int getVitesseY(Vitesse vitesse);
 
+void resetVitesse(Vitesse vitesse);
+
 #endif

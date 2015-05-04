@@ -4,6 +4,8 @@
 #include "acceleration.h"
 #include "vitesse.h"
 
+#define MAX_SPEED_SQUARE 25
+
 struct sVitesse{
 	int x;
 	int y;
@@ -22,6 +24,10 @@ void detruireVitesse(Vitesse vitesse){
 
 Vitesse ajouterVitesseAcceleration(Vitesse vitesse, Acceleration acceleration){
 	Vitesse vitesse2=initVitesse(vitesse->x+getAccelerationX(acceleration),vitesse->y+getAccelerationY(acceleration));
+	if(vitesse2->x * vitesse2->x + vitesse2->y * vitesse2->y > MAX_SPEED_SQUARE){
+		vitesse2->x=0;
+		vitesse2->y=0;
+	}
 	detruireVitesse(vitesse);
 	return vitesse2;
 }
@@ -32,4 +38,9 @@ int getVitesseX(Vitesse vitesse){
 
 int getVitesseY(Vitesse vitesse){
     return vitesse->y;
+}
+
+void resetVitesse(Vitesse vitesse){
+	vitesse->y=0;
+	vitesse->x=0;
 }

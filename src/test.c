@@ -3,9 +3,12 @@
 #include <string.h>
 #include <math.h>
 
+#include "voiture.h"
 #include "map.h"
 
 int main(int argn, char** argv){
-    printf("Hello words!\n");
+    Map map=chargerFichierMap("misc/test_teleportation.txt");
+	sauverMap(map,"log/test_teleportation.txt");
+	
     return 0;
 }

@@ -11,6 +11,8 @@ struct sVoiture{
 	Vitesse vitesse;
 	Voiture predecesseur;
 	int carburant;
+	int rang;
+	Acceleration coup;
 };
 
 Voiture initVoiture(void){
@@ -19,10 +21,13 @@ Voiture initVoiture(void){
 	voiture->vitesse=initVitesse(0,0);
 	voiture->predecesseur=NULL;
 	voiture->carburant=0;
+	voiture->rang=0;
 	return voiture;
 }
 
 void detruireVoiture(Voiture voiture){
+	detruirePosition(voiture->position);
+	detruireVitesse(voiture->vitesse);
 	free(voiture);
 }
 
@@ -32,10 +37,21 @@ Position deplacementVoiture(Voiture voiture){
 
 Voiture ajouterVoitureAcceleration(Voiture voiture,Acceleration acceleration){
 	Voiture voiture2=initVoiture();
+	voiture2->rang=voiture->rang++;
+	voiture2->predecesseur=voiture;
 	voiture2->vitesse=ajouterVitesseAcceleration(voiture->vitesse,acceleration);
 	return voiture2;
 }
 
 void setPositionVoiture(Voiture voiture, Position position){
+	detruirePosition(voiture->position);
 	voiture->position=position;
+}
+
+void resetVitesseVoiture(Voiture voiture){
+	resetVitesse(voiture->vitesse);
+}
+
+Position getPositionVoiture(Voiture voiture){
+	return voiture->position;
 }

@@ -11,4 +11,6 @@ int getAccelerationX(Acceleration acceleration);
 
 int getAccelerationY(Acceleration acceleration);
 
+void jouerCoup(Acceleration acceleration);
+
 #endif

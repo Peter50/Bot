@@ -26,3 +26,10 @@ int getAccelerationX(Acceleration acceleration){
 int getAccelerationY(Acceleration acceleration){
 	return acceleration->y;
 }
+
+void jouerCoup(Acceleration acceleration){	
+	char action[100];
+	sprintf(action,"%d %d",acceleration->x,acceleration->y);
+	fprintf(stdout, "%s\n", action);
+	fflush(stdout);
+}
