@@ -83,11 +83,11 @@ void * defiler(File file){
 	if(file->tete->suivant!=file->tete){
 		Element element=file->tete;
 		file->tete=file->tete->suivant;
-		file->queue->suivant=NULL;
+		file->tete->suivant=NULL;
 		detruireElement(element);
 	}
 	else{
-		detruireElement(file->tete);
+		detruireElement(file->queue);
 		file->tete=NULL;
 		file->queue=NULL;
 	}

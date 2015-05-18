@@ -39,6 +39,7 @@ Voiture ajouterVoitureAcceleration(Voiture voiture,Acceleration acceleration){
 	voiture2->predecesseur=voiture;
 	voiture2->vitesse=ajouterVitesseAcceleration(voiture->vitesse,acceleration);
 	voiture2->coup=acceleration;
+	voiture2->position=initPosition(getPositionX(voiture->position),getPositionY(voiture->position));
 	return voiture2;
 }
 

@@ -249,6 +249,10 @@ Voiture listeVoiture(Map map,Voiture voiture){
 	return voiture;
 }
 
+File fileCoup(Voiture voiture){
+	
+}
+
 int estCheck(Voiture voiture, Map map){
 	Position position=getPositionVoiture(voiture);
 	if(!(estValide(map,position))){
