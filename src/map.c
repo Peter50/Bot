@@ -207,6 +207,7 @@ int estValide(Map map,Position position){
 Voiture simulation(Voiture voiture,Map map,Acceleration acceleration){
 	Voiture voiture2=ajouterVoitureAcceleration(voiture,acceleration);
 	Position position2=deplacementVoiture(voiture2);
+	afficherVoiture(voiture2);
 	if(estValide(map,position2)){
 			setPositionVoiture(voiture,position2);
 	}
@@ -224,12 +225,15 @@ Voiture listeVoiture(Map map,Voiture voiture){
 	Voiture voiture2=NULL;
 	int i,end=0;
 
+	afficherVoiture(voiture);
+
 	enfiler(file,(void *)voiture);
 	while(!(fileEstVide(file)) && end == 0){
 		voiture=defiler(file);
 		for(i=0;i<map->nbNormal;i++){
-            printf("%d\n",i);
+            printf("Iteration %d\n",i);
 			voiture2=simulation(voiture,map,map->normal[i]);
+			afficherVoiture(voiture2);
 			if(!(estCheck(voiture2,map))){
 				enfiler(file,(void *)voiture2);
 			}

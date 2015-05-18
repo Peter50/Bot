@@ -28,7 +28,6 @@ Vitesse ajouterVitesseAcceleration(Vitesse vitesse, Acceleration acceleration){
 		vitesse2->x=0;
 		vitesse2->y=0;
 	}
-	detruireVitesse(vitesse);
 	return vitesse2;
 }
 
@@ -46,5 +45,5 @@ void resetVitesse(Vitesse vitesse){
 }
 
 void afficherVitesse(Vitesse vitesse){
-    printf("%d %d\n",vitesse->x,vitesse->y);
+    printf("x:%d y:%d\n",vitesse->x,vitesse->y);
 }

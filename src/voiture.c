@@ -38,6 +38,7 @@ Voiture ajouterVoitureAcceleration(Voiture voiture,Acceleration acceleration){
 	voiture2->rang=voiture->rang++;
 	voiture2->predecesseur=voiture;
 	voiture2->vitesse=ajouterVitesseAcceleration(voiture->vitesse,acceleration);
+	voiture2->coup=acceleration;
 	return voiture2;
 }
 
@@ -56,9 +57,10 @@ Position getPositionVoiture(Voiture voiture){
 
 void afficherVoiture(Voiture voiture){
     if(voiture){
+		printf("Position :\n");
         afficherPosition(voiture->position);
+		printf("Vitesse :\n");
         afficherVitesse(voiture->vitesse);
-        printf("%d %d\n",voiture->carburant,voiture->rang);
-        afficherVoiture(voiture->predecesseur);
+        printf("carburant : %d Rang : %d\n",voiture->carburant,voiture->rang);
     }
 }

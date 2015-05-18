@@ -35,5 +35,6 @@ void jouerCoup(Acceleration acceleration){
 }
 
 void afficherAcceleration(Acceleration acceleration){
-    printf("%d %d\n",acceleration->x,acceleration->y);
+    printf("x:%d y:%d\n",acceleration->x,acceleration->y);
+
 }
