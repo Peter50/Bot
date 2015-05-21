@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "pile.h"
 #include "file.h"
 #include "acceleration.h"
 #include "position.h"
@@ -249,8 +250,13 @@ Voiture listeVoiture(Map map,Voiture voiture){
 	return voiture;
 }
 
-File fileCoup(Voiture voiture){
-	
+Pile pileCoup(Voiture voiture){
+	Pile pile=initPile();
+	while(voiture != NULL){
+		empiler(pile,getCoup(voiture));
+		voiture=getPredecesseur(voiture);
+	}
+	return pile;
 }
 
 int estCheck(Voiture voiture, Map map){

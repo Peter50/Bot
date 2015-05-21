@@ -83,11 +83,11 @@ void * defiler(File file){
 	if(file->tete->suivant!=file->tete){
 		Element element=file->tete;
 		file->tete=file->tete->suivant;
-		file->tete->suivant=NULL;
+		file->queue->suivant=NULL;
 		detruireElement(element);
 	}
 	else{
-		detruireElement(file->queue);
+		detruireElement(file->tete);
 		file->tete=NULL;
 		file->queue=NULL;
 	}
@@ -105,13 +105,14 @@ void concatFile(File file1, File file2){
 
 void afficherFile(File file, void (*fonction)(void *)){
 
-	assert(!(fileEstVide(file)));
+	assert(file!=NULL);
 
 	Element element=file->tete;
-	do{
+	while(element!=NULL){
 		fonction(element->valeur);
 		element=element->suivant;
-	}while(element!=NULL);
+		printf("\n");
+	}
 }
 
 void afficherInt(void * integer){

@@ -23,4 +23,6 @@ Position getPositionVoiture(Voiture voiture);
 
 void afficherVoiture(Voiture voiture);
 
+void afficherVoitureRecursif(Voiture voiture);
+
 #endif

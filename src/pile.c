@@ -6,20 +6,22 @@
 struct sElementPile{
 	void * valeur;
 	ElementPile suivant;
-	ElementPile precedent;
-}
+};
 
 struct sPile{
 	ElementPile tete;
 	ElementPile queue;
-}
+};
 
 ElementPile initElementPile(void * valeur){
 	ElementPile element=malloc(sizeof(struct sElementPile));
 	element->valeur=valeur;
 	element->suivant=NULL;
-	element->precedent=NULL;
 	return element;
+}
+
+void detruireElementPile(ElementPile element){
+	free(element);
 }
 
 Pile initPile(void){	
@@ -29,24 +31,28 @@ Pile initPile(void){
 	return pile;
 }
 
-void enpiler(Pile pile,void * valeur){
+void empiler(Pile pile,void * valeur){
 	if(pile!=NULL){	
 		ElementPile element=initElementPile(valeur);
 		if(pile->tete==NULL){
 			element->suivant=element;
-			element->precedent=element;
 			pile->tete=element;
 			pile->queue=element;
 		}
 		else{
-			file->queue->suivant=element;
-			element->precedent=file->queue;
-			file->queue=element;
-			element->suivant=NULL;
+			element->suivant=pile->tete;
+			pile->tete=element;
 		}
 	}
 }
 
 void * depiler(Pile pile){
-
+	if(pile != NULL && pile->tete != NULL){
+		void * valeur=pile->tete->valeur;
+		ElementPile element=pile->tete;
+		pile->tete=pile->tete->suivant;
+		detruireElementPile(element);
+		return valeur;
+	}
+	return NULL;
 }

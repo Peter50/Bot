@@ -3,6 +3,7 @@
 #include <string.h>
 #include <math.h>
 
+#include "pile.h"
 #include "voiture.h"
 #include "map.h"
 
@@ -13,5 +14,7 @@ int main(int argn, char** argv){
 	setPositionVoiture(voiture,getPosition(map));
 	Voiture voiture2=listeVoiture(map,voiture);
 	afficherVoiture(voiture2);
+	printf("Liste ----------------------------------------\n");
+	afficherVoitureRecursif(voiture2);
     return 0;
 }

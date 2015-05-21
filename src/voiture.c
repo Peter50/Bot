@@ -65,3 +65,22 @@ void afficherVoiture(Voiture voiture){
         printf("carburant : %d Rang : %d\n",voiture->carburant,voiture->rang);
     }
 }
+
+void afficherVoitureRecursif(Voiture voiture){
+    if(voiture){
+		printf("Position :\n");
+        afficherPosition(voiture->position);
+		printf("Vitesse :\n");
+        afficherVitesse(voiture->vitesse);
+        printf("carburant : %d Rang : %d\n",voiture->carburant,voiture->rang);
+		afficherVoitureRecursif(voiture->predecesseur);
+    }
+}
+
+Acceleration getCoup(Voiture voiture){
+	return voiture->coup;
+}
+
+Voiture getPredecesseur(Voiture voiture){
+	return voiture->predecesseur;
+}
